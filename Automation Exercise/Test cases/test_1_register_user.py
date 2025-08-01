@@ -11,15 +11,14 @@ driver = webdriver.Chrome(service=service) # launch browser
 driver.get("http://automationexercise.com") # navigate to url
 
 WebDriverWait(driver, 5).until(
-    # verify that site is visible
+    # verify that home page is visible
     EC.presence_of_element_located((By.XPATH, "//img[@alt='Website for automation practice']"))
 )
 
+# click on 'Signup / Login' button
 login_signup_button = WebDriverWait(driver, 5).until(
     EC.element_to_be_clickable((By.XPATH, "//a[contains(text(), 'Signup / Login')]"))
 )
-
-# click on 'Signup / Login' button
 login_signup_button.click()
 
 WebDriverWait(driver, 5).until(
@@ -91,7 +90,7 @@ zipcode.send_keys("12345")
 mobile_number = driver.find_element(By.ID, "mobile_number")
 mobile_number.send_keys("123")
 
-# click 'Create Account button'
+# click 'Create Account' button
 create_account_button = driver.find_element(By.XPATH, "//button[@data-qa='create-account']")
 create_account_button.click()
 

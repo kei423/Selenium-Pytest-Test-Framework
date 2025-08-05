@@ -1,4 +1,5 @@
 import requests
+import json
 
 url = "https://automationexercise.com/api/productsList"
 
@@ -8,6 +9,8 @@ assert response.status_code == 200, "Expected 200, but got" + response.status_co
 
 try:
     products = response.json()
-    print(products)
+    print("Response Code: " + str(products["responseCode"]))
+    for product in products["products"]:
+        print(json.dumps(product["name"]))
 except:
-    print("Reponse was not valid JSON")
+    print("Invalid JSON in response")

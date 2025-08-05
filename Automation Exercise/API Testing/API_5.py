@@ -1,5 +1,4 @@
 import requests
-import json
 
 url = "https://automationexercise.com/api/searchProduct"
 
@@ -10,6 +9,7 @@ assert response.status_code == 200, "Expected 200, but got " + response.status_c
 
 try:
     search_product = response.json()
+    print("Response code: " + str(search_product["responseCode"]))
     for product in search_product["products"]:
         print(product)
 except:

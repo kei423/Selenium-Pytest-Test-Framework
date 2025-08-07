@@ -5,7 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-url = "https://uitestingplayground.com/progressbar"
+url = "https://uitestingplayground.com/sampleapp"
 
 chrome_options = Options()
 chrome_options.add_argument("--ignore-certificate-errors")
@@ -16,24 +16,20 @@ driver = webdriver.Chrome(service=service, options=chrome_options)
 
 driver.get(url)
 
-start_button = WebDriverWait(driver, 10).until(
-    EC.element_to_be_clickable((By.ID, "startButton"))
+WebDriverWait(driver, 10).until(
+    EC.visibility_of_element_located((By.XPATH, "//h3[text()='Sample App']"))
 )
 
-stop_button = driver.find_element(By.ID, "stopButton")
+username = driver.find_element(By.XPATH, "//input[@name='UserName']")
+username.send_keys("aaa")
+password = driver.find_element(By.XPATH, "//input[@name='Password']")
+password.send_keys("pwd")
+login_button = driver.find_element(By.ID, "login")
+login_button.click()
 
-progress_bar = driver.find_element(By.ID, "progressBar")
-
-start_button.click()
-
-WebDriverWait(driver, 120).until(
-    lambda d: int(d.find_element(By.ID, "progressBar").get_attribute("aria-valuenow")) >= 75
+login_status = WebDriverWait(driver, 10).until(
+    EC.presence_of_element_located((By.ID, "loginstatus"))
 )
-
-stop_button.click()
-
-print(progress_bar.get_attribute("aria-valuenow"))
-result = driver.find_element(By.ID, "result")
-print(result.text)
+print(login_status.text)
 
 driver.quit()
